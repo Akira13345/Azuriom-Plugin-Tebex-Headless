@@ -27,6 +27,17 @@ return [
         'private_key_placeholder' => 'Entrez la nouvelle clé privée ou laissez vide pour conserver l\'actuelle',
         'private_key_security_warning' => 'Pour des raisons de sécurité, laissez vide pour conserver l\'ancienne clé',
         'private_key_info' => 'Entrez votre clé privée Tebex (sera cryptée)',
+        'package' => 'Article',
+        'banner_text' => 'Texte du bandeau',
+        'banner_color' => 'Couleur',
+        'banner_position' => 'Position',
+        'select_package' => 'Sélectionner un article',
+    ],
+
+    'banners' => [
+        'title' => 'Bandeaux d\'articles',
+        'info' => 'Ajoutez des bandeaux décoratifs sur vos articles (ex: Meilleur choix, Offre limitée).',
+        'add' => 'Ajouter un bandeau',
     ],
 
     'validation' => [

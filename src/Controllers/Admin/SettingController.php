@@ -8,10 +8,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Tebex\Requests\TebexSettingsRequest;
+use Azuriom\Plugin\Tebex\Services\TebexApiService;
+use Azuriom\Plugin\Tebex\Services\TebexCategoryService;
 use Illuminate\Support\Facades\Crypt;
 
 class SettingController extends Controller
 {
+    private TebexApiService $tebexApi;
+    private TebexCategoryService $categoryService;
+
+    public function __construct(TebexApiService $tebexApi, TebexCategoryService $categoryService)
+    {
+        $this->tebexApi = $tebexApi;
+        $this->categoryService = $categoryService;
+    }
     /**
      * Display the tebex settings.
      *
@@ -30,12 +40,24 @@ class SettingController extends Controller
             }
         }
 
+        $packages = [];
+        $token = setting('tebex.key');
+        if ($token) {
+            try {
+                list($rProducts, $rCategories, $rSales) = $this->categoryService->getCategoriesData($token, true);
+                $packages = $rProducts;
+            } catch (\Exception $e) {
+            }
+        }
+
         return view('tebex::admin.index', [
             'public_key' => setting('tebex.key', ''),
             'tebex_project_id' => setting('tebex.project_id', ''),
             'tebex_private_key' => $decryptedPrivateKey,
             'tebex_shop_title' => setting('tebex.shop.title', ''),
             'tebex_shop_subtitle' => setting('tebex.shop.subtitle', ''),
+            'banners' => json_decode(setting('tebex.package_banners', '[]'), true),
+            'packages' => $packages,
         ]);
     }
 
@@ -61,6 +83,7 @@ class SettingController extends Controller
             'tebex.shop.subtitle' => $request->input('tebex_subtitle'),
             'tebex.shop.home_status' => $request->input('home_status'),
             'tebex.shop.home.message' => $request->input('home_message'),
+            'tebex.package_banners' => json_encode($request->input('banners', [])),
         ]);
 
         return redirect()->route('tebex.admin.index')

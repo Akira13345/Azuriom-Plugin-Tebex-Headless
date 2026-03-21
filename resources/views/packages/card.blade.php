@@ -14,6 +14,34 @@
             <span><small>{{ setting('tebex.shop.vat.status') ? trans('tebex::messages.vat.ttc') : trans('tebex::messages.vat.ht') }}</small></span>
         </h5>
 
+        @if(isset($package->banner) && $package->banner)
+            <div class="package-banner" style="background-color: {{ $package->banner->color }};">
+                {{ $package->banner->text }}
+            </div>
+        @endif
+
+        <style>
+            .card.h-100 {
+                position: relative;
+                overflow: hidden;
+            }
+            .package-banner {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                padding: 3px 10px;
+                color: white;
+                font-weight: bold;
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                text-align: center;
+                z-index: 10;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+                pointer-events: none;
+            }
+        </style>
+
         <div class="d-flex gap-2">
             <button class="btn btn-primary" onclick="openPackageModal({{ json_encode($package) }})">
                 @if ($package->isInCart)

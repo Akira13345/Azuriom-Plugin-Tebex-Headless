@@ -168,7 +168,8 @@ class TebexCategoryService
                 "discounted" => ($discountBase > 0) ? round($currentPrice, 2) : null,
                 "expire" => null,
             ],
-            "sales" => []
+            "sales" => [],
+            "banner" => $this->getPackageBanner($Product->id)
         ];
 
         if (isset($rSales->data) && is_array($rSales->data)) {
@@ -194,5 +195,18 @@ class TebexCategoryService
         }
 
         return $product;
+    }
+
+    public function getPackageBanner($packageId)
+    {
+        $banners = json_decode(setting('tebex.package_banners', '[]'), true);
+
+        foreach ($banners as $banner) {
+            if ($banner['package_id'] == $packageId) {
+                return (object) $banner;
+            }
+        }
+
+        return null;
     }
 }
