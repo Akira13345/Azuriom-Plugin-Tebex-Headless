@@ -73,10 +73,10 @@
         <div class="col col-xl-4 d-flex flex-column gap-2">
             <div class="card mb-0 flex-grow-1">
                 <div class="card-body d-flex flex-row gap-3">
-                    <div>
-                        <img src="{{ theme_asset('img/dixept.webp') }}" alt="Logo Dixept" width="148" height="64"
+                    <a href="https://discord.gg/Gh2yBxUWvV" target="_blank">
+                        <img src="https://dixept.fr/logo.webp" alt="Logo Dixept" width="148" height="64"
                              class="img-fluid rounded-3">
-                    </div>
+                    </a>
 
                     <div>
                         <p class="fw-semibold mb-1">{{ trans($ressourceName .'::intro.developed_by') }} <a href="https://dixept.fr"
